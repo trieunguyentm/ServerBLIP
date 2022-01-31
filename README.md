@@ -6,6 +6,7 @@ colorTo: blue
 sdk: gradio
 app_file: app.py
 pinned: false
+license: bsd-3-clause
 ---
 
 # Configuration
