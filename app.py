@@ -1,8 +1,4 @@
 import os
-import sys
-os.system("git clone https://github.com/salesforce/BLIP")
-sys.path.append("BLIP")
-os.chdir("BLIP")
 os.system("wget https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/1024px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg -O mona.jpg")
 
 from PIL import Image
