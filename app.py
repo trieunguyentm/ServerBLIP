@@ -30,16 +30,38 @@ model = blip_decoder(pretrained=model_url, image_size=384, vit='base')
 model.eval()
 model = model.to(device)
 
-    
-def inference(raw_image):
-    image = transform(raw_image).unsqueeze(0).to(device)     
-    with torch.no_grad():
-      caption = model.generate(image, sample=False, num_beams=3, max_length=20, min_length=5)
-      print('caption: '+caption[0])
 
-    return 'caption: '+caption[0]
+from models.blip_vqa import blip_vqa
+
+image_size_vq = 480
+transform_vq = transforms.Compose([
+    transforms.Resize((image_size_vq,image_size_vq),interpolation=InterpolationMode.BICUBIC),
+    transforms.ToTensor(),
+    transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711))
+    ]) 
+
+model_url_vq = 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model*_vqa.pth'
     
-inputs = gr.inputs.Image(type='pil')
+model_vq = blip_vqa(pretrained=model_url_vq, image_size=480, vit='base')
+model_vq.eval()
+model_vq = model_vq.to(device)
+
+
+
+def inference(raw_image, model, question):
+    if model == 'Image Captioning':
+        image = transform(raw_image).unsqueeze(0).to(device)   
+        with torch.no_grad():
+          caption = model.generate(image, sample=False, num_beams=3, max_length=20, min_length=5)
+          return 'caption: '+caption[0]
+
+    else:   
+        image_vq = transform_vq(raw_image).unsqueeze(0).to(device)  
+        with torch.no_grad():
+            answer = model(image_vq, question, train=False, inference='generate') 
+        return  'answer: '+answer[0]
+    
+inputs = [gr.inputs.Image(type='pil'),gr.inputs.Radio(choices=['Image Captioning',"Visual Question Answering"], type="value", default="Image Captioning", label="Model"),"textbox"]
 outputs = gr.outputs.Textbox(label="Output")
 
 title = "BLIP"
@@ -49,4 +71,4 @@ description = "Gradio demo for BLIP: Bootstrapping Language-Image Pre-training f
 article = "<p style='text-align: center'><a href='https://arxiv.org/abs/2201.12086' target='_blank'>BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation</a> | <a href='https://github.com/salesforce/BLIP' target='_blank'>Github Repo</a></p>"
 
 
-gr.Interface(inference, inputs, outputs, title=title, description=description, article=article, examples=[['starry.jpg']]).launch(enable_queue=True,cache_examples=True)
+gr.Interface(inference, inputs, outputs, title=title, description=description, article=article, examples=[['starry.jpg',"Image Captioning",""]]).launch(enable_queue=True,cache_examples=True)
