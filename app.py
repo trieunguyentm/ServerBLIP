@@ -58,7 +58,7 @@ def inference(raw_image, model_n, question):
     else:   
         image_vq = transform_vq(raw_image).unsqueeze(0).to(device)  
         with torch.no_grad():
-            answer = model(image_vq, question, train=False, inference='generate') 
+            answer = model_vq(image_vq, question, train=False, inference='generate') 
         return  'answer: '+answer[0]
     
 inputs = [gr.inputs.Image(type='pil'),gr.inputs.Radio(choices=['Image Captioning',"Visual Question Answering"], type="value", default="Image Captioning", label="Model"),"textbox"]
