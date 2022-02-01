@@ -48,8 +48,8 @@ model_vq = model_vq.to(device)
 
 
 
-def inference(raw_image, model, question):
-    if model == 'Image Captioning':
+def inference(raw_image, model_n, question):
+    if model_n == 'Image Captioning':
         image = transform(raw_image).unsqueeze(0).to(device)   
         with torch.no_grad():
           caption = model.generate(image, sample=False, num_beams=3, max_length=20, min_length=5)
