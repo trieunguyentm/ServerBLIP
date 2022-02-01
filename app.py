@@ -1,5 +1,5 @@
 import os
-os.system("wget https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/1024px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg -O mona.jpg")
+os.system("wget https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1920px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg -O starry.jpg")
 
 from PIL import Image
 import requests
@@ -42,11 +42,11 @@ def inference(raw_image):
 inputs = gr.inputs.Image(type='pil')
 outputs = gr.outputs.Textbox(label="Output")
 
-title = "Omnivore"
+title = "BLIP"
 
-description = "Gradio demo for Omnivore: A Single Model for Many Visual Modalities. To use it, simply upload your image, or click one of the examples to load them. Read more at the links below."
+description = "Gradio demo for BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation. To use it, simply upload your image, or click one of the examples to load them. Read more at the links below."
 
-article = "<p style='text-align: center'><a href='https://arxiv.org/abs/2201.08377' target='_blank'>Omnivore: A Single Model for Many Visual Modalities</a> | <a href='https://github.com/facebookresearch/omnivore' target='_blank'>Github Repo</a></p>"
+article = "<p style='text-align: center'><a href='https://arxiv.org/abs/2201.12086' target='_blank'>BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation</a> | <a href='https://github.com/salesforce/BLIP' target='_blank'>Github Repo</a></p>"
 
 
-gr.Interface(inference, inputs, outputs, title=title, description=description, article=article, examples=[['mona.jpg']]).launch(enable_queue=True,cache_examples=True)
+gr.Interface(inference, inputs, outputs, title=title, description=description, article=article, examples=[['starry.jpg']]).launch(enable_queue=True,cache_examples=True)
