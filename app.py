@@ -66,7 +66,7 @@ outputs = gr.outputs.Textbox(label="Output")
 
 title = "BLIP"
 
-description = "Gradio demo for BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation by [Salesforce Research](https://github.com/salesforce). To use it, simply upload your image, or click one of the examples to load them. Read more at the links below."
+description = "Gradio demo for BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation by Salesforce Research. To use it, simply upload your image, or click one of the examples to load them. Read more at the links below."
 
 article = "<p style='text-align: center'><a href='https://arxiv.org/abs/2201.12086' target='_blank'>BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation</a> | <a href='https://github.com/salesforce/BLIP' target='_blank'>Github Repo</a></p>"
 
