@@ -48,11 +48,14 @@ model_vq = model_vq.to(device)
 
 
 
-def inference(raw_image, model_n, question):
+def inference(raw_image, model_n, question, strategy):
     if model_n == 'Image Captioning':
         image = transform(raw_image).unsqueeze(0).to(device)   
         with torch.no_grad():
-          caption = model.generate(image, sample=False, num_beams=3, max_length=20, min_length=5)
+          if strategy == "beam search":
+              caption = model.generate(image, sample=False, num_beams=3, max_length=20, min_length=5)
+          else:
+              caption = model.generate(image, sample=True, top_p=0.9, max_length=20, min_length=5)
           return 'caption: '+caption[0]
 
     else:   
@@ -61,7 +64,7 @@ def inference(raw_image, model_n, question):
             answer = model_vq(image_vq, question, train=False, inference='generate') 
         return  'answer: '+answer[0]
     
-inputs = [gr.inputs.Image(type='pil'),gr.inputs.Radio(choices=['Image Captioning',"Visual Question Answering"], type="value", default="Image Captioning", label="Model"),"textbox"]
+inputs = [gr.inputs.Image(type='pil'),gr.inputs.Radio(choices=['Image Captioning',"Visual Question Answering"], type="value", default="Image Captioning", label="Model"),"textbox",gr.inputs.Radio(choices=['Beam search','Nucleus sampling'], type="value", default="Nucleus sampling", label="Strategy")]
 outputs = gr.outputs.Textbox(label="Output")
 
 title = "BLIP"
