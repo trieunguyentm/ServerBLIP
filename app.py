@@ -74,4 +74,4 @@ description = "Gradio demo for BLIP: Bootstrapping Language-Image Pre-training f
 article = "<p style='text-align: center'><a href='https://arxiv.org/abs/2201.12086' target='_blank'>BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation</a> | <a href='https://github.com/salesforce/BLIP' target='_blank'>Github Repo</a></p>"
 
 
-gr.Interface(inference, inputs, outputs, title=title, description=description, article=article, examples=[['starry.jpg',"Image Captioning","None"]]).launch(enable_queue=True,cache_examples=True)
+gr.Interface(inference, inputs, outputs, title=title, description=description, article=article, examples=[['starry.jpg',"Image Captioning","None","Nucleus sampling"]]).launch(enable_queue=True,cache_examples=True)
