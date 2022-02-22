@@ -21,7 +21,7 @@ transform = transforms.Compose([
     transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711))
     ]) 
 
-model_url = 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model*_large_caption.pth'
+model_url = 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_large_caption.pth'
     
 model = blip_decoder(pretrained=model_url, image_size=384, vit='large')
 model.eval()
