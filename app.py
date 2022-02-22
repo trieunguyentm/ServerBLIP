@@ -21,9 +21,9 @@ transform = transforms.Compose([
     transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711))
     ]) 
 
-model_url = 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model*_base_caption.pth'
+model_url = 'https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model*_large_caption.pth'
     
-model = blip_decoder(pretrained=model_url, image_size=384, vit='base')
+model = blip_decoder(pretrained=model_url, image_size=384, vit='large')
 model.eval()
 model = model.to(device)
 
@@ -61,12 +61,12 @@ def inference(raw_image, model_n, question, strategy):
             answer = model_vq(image_vq, question, train=False, inference='generate') 
         return  'answer: '+answer[0]
     
-inputs = [gr.inputs.Image(type='pil'),gr.inputs.Radio(choices=['Image Captioning',"Visual Question Answering"], type="value", default="Image Captioning", label="Model"),"textbox",gr.inputs.Radio(choices=['Beam search','Nucleus sampling'], type="value", default="Nucleus sampling", label="Strategy")]
+inputs = [gr.inputs.Image(type='pil'),gr.inputs.Radio(choices=['Image Captioning',"Visual Question Answering"], type="value", default="Image Captioning", label="Model"),"textbox",gr.inputs.Radio(choices=['Beam search','Nucleus sampling'], type="value", default="Nucleus sampling", label="Caption Decoding Strategy")]
 outputs = gr.outputs.Textbox(label="Output")
 
 title = "BLIP"
 
-description = "Gradio demo for BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation by Salesforce Research. To use it, simply upload your image, or click one of the examples to load them. Read more at the links below."
+description = "Gradio demo for BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation (Salesforce Research). To use it, simply upload your image, or click one of the examples to load them. Read more at the links below."
 
 article = "<p style='text-align: center'><a href='https://arxiv.org/abs/2201.12086' target='_blank'>BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation</a> | <a href='https://github.com/salesforce/BLIP' target='_blank'>Github Repo</a></p>"
 
