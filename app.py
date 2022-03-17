@@ -49,7 +49,7 @@ def inference(raw_image, model_n, question, strategy):
     if model_n == 'Image Captioning':
         image = transform(raw_image).unsqueeze(0).to(device)   
         with torch.no_grad():
-          if strategy == "beam search":
+          if strategy == "Beam search":
               caption = model.generate(image, sample=False, num_beams=3, max_length=20, min_length=5)
           else:
               caption = model.generate(image, sample=True, top_p=0.9, max_length=20, min_length=5)
