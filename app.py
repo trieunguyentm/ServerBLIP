@@ -52,7 +52,7 @@ def inference(raw_image, model_n, question, strategy):
           if strategy == "Beam search":
               caption = model.generate(image, sample=False, num_beams=3, max_length=20, min_length=5)
           else:
-              caption = model.generate(image, sample=True, top_p=0.95, max_length=20, min_length=5)
+              caption = model.generate(image, sample=True, top_p=0.9, max_length=20, min_length=5)
           return 'caption: '+caption[0]
 
     else:   
