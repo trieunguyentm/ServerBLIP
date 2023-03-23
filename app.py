@@ -6,10 +6,6 @@ from torchvision.transforms.functional import InterpolationMode
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-
-
-
-
 import gradio as gr
 
 from models.blip import blip_decoder
@@ -61,14 +57,23 @@ def inference(raw_image, model_n, question, strategy):
             answer = model_vq(image_vq, question, train=False, inference='generate') 
         return  'answer: '+answer[0]
     
-inputs = [gr.inputs.Image(type='pil'),gr.inputs.Radio(choices=['Image Captioning',"Visual Question Answering"], type="value", default="Image Captioning", label="Task"),gr.inputs.Textbox(lines=2, label="Question"),gr.inputs.Radio(choices=['Beam search','Nucleus sampling'], type="value", default="Nucleus sampling", label="Caption Decoding Strategy")]
+inputs = [
+    gr.Image(type='pil', interactive=False),
+    gr.inputs.Radio(choices=['Image Captioning',"Visual Question Answering"],
+    type="value",
+    default="Image Captioning",
+    label="Task"
+),gr.inputs.Textbox(lines=2, label="Question"),gr.inputs.Radio(choices=['Beam search','Nucleus sampling'], type="value", default="Nucleus sampling", label="Caption Decoding Strategy")]
 outputs = gr.outputs.Textbox(label="Output")
 
 title = "BLIP"
 
 description = "Gradio demo for BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation (Salesforce Research). To use it, simply upload your image, or click one of the examples to load them. Read more at the links below."
 
-article = "<p style='text-align: center'><a href='https://arxiv.org/abs/2201.12086' target='_blank'>BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation</a> | <a href='https://github.com/salesforce/BLIP' target='_blank'>Github Repo</a></p>"
-
+article = """
+    <p style='text-align: center'><a href='https://arxiv.org/abs/2201.12086' target='_blank'>BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation</a> | <a href='https://github.com/salesforce/BLIP' target='_blank'>Github Repo</a></p>
+    <p><strong>We have now disable image uploading as of March 23. 2023. </strong>
+    <p><strong>For example usage, see notebooks https://github.com/salesforce/LAVIS/tree/main/examples.</strong>
+"""
 
 gr.Interface(inference, inputs, outputs, title=title, description=description, article=article, examples=[['starrynight.jpeg',"Image Captioning","None","Nucleus sampling"]]).launch(enable_queue=True)
