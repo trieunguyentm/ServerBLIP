@@ -1,0 +1,4 @@
+model__vqa.pth
+model_base_capfilt_large.pth
+model_large_caption.pth
+.env

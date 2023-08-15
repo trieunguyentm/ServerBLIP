@@ -5,3 +5,6 @@ pycocoevalcap
 torch
 torchvision
 Pillow
+openai
+Flask
+requests
